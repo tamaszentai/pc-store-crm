@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import Header from "./Header";
+import LoginPage from "./LoginPage";
+import Products from "./Products";
+import Dashboard from "./Dashboard";
+import Orders from "./Orders";
 
 function App() {
+  const token = { email: "admin@pcstore.com", password: "admin" };
+  localStorage.setItem('token', JSON.stringify(token));
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+      <Header />
+      <Switch>
+        <Route exact path='/' component={LoginPage} />
+        <Route path='/dashboard' component={Dashboard} />
+        <Route path='/products' component={Products} />
+        <Route path='/orders' component={Orders} />
+      </Switch>
+      </Router>
     </div>
   );
 }
