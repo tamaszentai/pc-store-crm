@@ -1,16 +1,7 @@
 import React, { useState } from "react";
 
+
 const Products = () => {
-
-
-  // const dbName = "Products";
-  // let request = window.indexedDB.open(dbName, 1),db,tx,store,index;
-  // request.onerror = (event) => {
-  //   console.log("There was an error" + event.target.errorCode)
-  // };
-  // request.onsuccess = (event) => {
-  //   db = request.result
-  // }
 
   const [productId, setProductId] = useState(null);
   const [productName, setProductName] = useState(null);
@@ -75,28 +66,38 @@ const Products = () => {
     setUpdatedAt(event.target.value);
   };
 
-  const product = {
+  const item = {
     product_id: productId,
     product_name: productName,
     product_description: productDescription,
     product_type: productType,
     product_store_cost: productStoreCost,
-    product_client_price: productClientPrice
+    product_client_price: productClientPrice,
+    product_is_out_of_stock: isOutOfStock,
+    product_in_store_amount: totalInStoreAmount,
+    product_created_at: createdAt,
+    product_updated_at: updatedAt
   };
 
 
   const addItemHandler = (event) => {
     event.preventDefault();
-    if(!localStorage.getItem('products')){
-      localStorage.setItem('products', JSON.stringify(product));
-      } else {
-        const data = localStorage.getItem('products');
-        console.log(JSON.parse(data));
-      }
-        
-        
-   
+    sessionStorage.setItem(`${item.product_id}`, JSON.stringify(item))
   }
+
+  
+// iterate localStorage
+for (let i = 0; i < sessionStorage.length; i++) {
+
+  // set iteration key name
+  let key = sessionStorage.key(i);
+
+  // use key name to retrieve the corresponding value
+  let value = sessionStorage.getItem(key);
+
+  // console.log the iteration key and value
+  console.log(key, JSON.parse(value));
+}
 
   return (
     <div className="products">
@@ -107,6 +108,7 @@ const Products = () => {
           <input
             type="text"
             placeholder="product_id"
+            required
             onChange={productIdChangeHandler}
           />
         </label>
@@ -116,6 +118,7 @@ const Products = () => {
           <input
             type="text"
             placeholder="product_name"
+            required
             onChange={productNameChangeHandler}
           />
         </label>
@@ -125,6 +128,7 @@ const Products = () => {
           <input
             type="text"
             placeholder="product_description"
+            required
             onChange={productDescriptionChangeHandler}
           />
         </label>
@@ -134,6 +138,7 @@ const Products = () => {
           <input
             type="text"
             placeholder="product_type"
+            required
             onChange={productTypeChangeHandler}
           />
         </label>
@@ -143,6 +148,7 @@ const Products = () => {
           <input
             type="text"
             placeholder="product_store_cost"
+            required
             onChange={productStoreCostChangeHandler}
           />
         </label>
@@ -152,6 +158,7 @@ const Products = () => {
           <input
             type="text"
             placeholder="product_client_price"
+            required
             onChange={productClientPriceChangeHandler}
           />
         </label>
@@ -166,6 +173,7 @@ const Products = () => {
           <input
             type="text"
             placeholder="total_in_store_amount"
+            required
             onChange={totalInStoreAmountChangeHandler}
           />
         </label>
