@@ -26,7 +26,7 @@ function App() {
       setIsAuthenticated(false);
     }
   };
-  const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem("loggedIn"));
+  const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem("loggedIn") ? true : false);
 
   const token = { email: "admin@pcstore.com", password: "admin" };
   localStorage.setItem("token", JSON.stringify(token));
