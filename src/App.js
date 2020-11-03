@@ -31,16 +31,16 @@ function App() {
   const token = { email: "admin@pcstore.com", password: "admin" };
   localStorage.setItem("token", JSON.stringify(token));
 
- 
-
-
-  console.log(isAuthenticated);
+  const logoutHandler = () => {
+    sessionStorage.clear();
+    setIsAuthenticated(false);
+  }
 
   return (
     <Provider store={store}>
       <div className="App">
         <Router>
-          <Header auth={isAuthenticated}/>
+          <Header auth={isAuthenticated} logoutHandler={logoutHandler}/>
           <Switch>
             <Route
               exact

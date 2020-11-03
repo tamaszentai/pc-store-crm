@@ -1,15 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 const Header = (props) => {
-
-const logoutHandler = () => {
-  sessionStorage.clear();
-}
 
   return (
   <div className="header">
     <h1>PC Store CRM</h1>
-    {props.auth ? <div><button onClick={logoutHandler}>Logout</button></div> : <div></div>}
+    {props.auth ? <div><button onClick={props.logoutHandler}>Logout</button></div> : <div></div>}
   </div>
   )
 };
