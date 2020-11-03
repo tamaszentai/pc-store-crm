@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 
-const Products = () => {
+const Products = (props) => {
+
 
   const [productId, setProductId] = useState(null);
   const [productName, setProductName] = useState(null);

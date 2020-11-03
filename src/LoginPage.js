@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
 
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -28,6 +28,7 @@ const LoginPage = () => {
     } else {
       alert('Invalid email or password');
     }
+    props.auth();
   }
 
   return(
