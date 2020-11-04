@@ -29,7 +29,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem("loggedIn") ? true : false);
 
   const token = { email: "admin@pcstore.com", password: "admin" };
-  localStorage.setItem("token", JSON.stringify(token));
+  sessionStorage.setItem("token", JSON.stringify(token));
 
   const logoutHandler = () => {
     sessionStorage.clear();

@@ -19,7 +19,7 @@ const LoginPage = (props) => {
       alert('Invalid credentials');
     }
     e.preventDefault();
-    const storageToken = localStorage.getItem('token');
+    const storageToken = sessionStorage.getItem('token');
     const credentials = { email: email, password: password};
     const token = JSON.stringify(credentials);
     if (token === storageToken){

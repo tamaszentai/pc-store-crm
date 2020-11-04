@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 const Products = (props) => {
 
-
   const [productId, setProductId] = useState(null);
   const [productName, setProductName] = useState(null);
   const [productDescription, setProductDescription] = useState(null);
@@ -47,7 +46,8 @@ const Products = (props) => {
 
   const isOutOfStockChangeHandler = (event) => {
     if (isOutOfStock === false) {
-      setIsOutOfStock(true);
+      setIsOutOfStock(true)
+      setTotalInStoreAmount(0);
     } else {
       setIsOutOfStock(false);
     }
@@ -57,6 +57,7 @@ const Products = (props) => {
     const input = event.target.value;
     const storeAmount = parseInt(input);
     setTotalInStoreAmount(storeAmount);
+    
   };
 
   const createdAtChangeHandler = (event) => {
@@ -83,18 +84,18 @@ const Products = (props) => {
 
   const addItemHandler = (event) => {
     event.preventDefault();
-    sessionStorage.setItem(`product${item.product_id}`, JSON.stringify(item))
+    localStorage.setItem(`product${item.product_id}`, JSON.stringify(item))
   }
 
-  
+  let value;
 // iterate localStorage
-for (let i = 0; i < sessionStorage.length; i++) {
+for (let i = 0; i < localStorage.length; i++) {
 
   // set iteration key name
-  let key = sessionStorage.key(i);
+  let key = localStorage.key(i);
 
   // use key name to retrieve the corresponding value
-  let value = sessionStorage.getItem(key);
+  value = localStorage.getItem(key);
 
   // console.log the iteration key and value
   console.log(key, JSON.parse(value));
@@ -175,6 +176,7 @@ for (let i = 0; i < sessionStorage.length; i++) {
             type="number"
             placeholder="total_in_store_amount"
             required
+            disabled={isOutOfStock}
             onChange={totalInStoreAmountChangeHandler}
           />
         </label>
