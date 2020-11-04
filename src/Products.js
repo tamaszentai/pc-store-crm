@@ -83,7 +83,7 @@ const Products = (props) => {
 
   const addItemHandler = (event) => {
     event.preventDefault();
-    sessionStorage.setItem(`${item.product_id}`, JSON.stringify(item))
+    sessionStorage.setItem(`product${item.product_id}`, JSON.stringify(item))
   }
 
   
@@ -107,7 +107,7 @@ for (let i = 0; i < sessionStorage.length; i++) {
         <label>
           Product id:
           <input
-            type="text"
+            type="number"
             placeholder="product_id"
             required
             onChange={productIdChangeHandler}
@@ -147,7 +147,7 @@ for (let i = 0; i < sessionStorage.length; i++) {
         <label>
           Product store cost:
           <input
-            type="text"
+            type="number"
             placeholder="product_store_cost"
             required
             onChange={productStoreCostChangeHandler}
@@ -157,7 +157,7 @@ for (let i = 0; i < sessionStorage.length; i++) {
         <label>
           Product client price:
           <input
-            type="text"
+            type="number"
             placeholder="product_client_price"
             required
             onChange={productClientPriceChangeHandler}
@@ -172,7 +172,7 @@ for (let i = 0; i < sessionStorage.length; i++) {
         <label>
           Total in store amount:
           <input
-            type="text"
+            type="number"
             placeholder="total_in_store_amount"
             required
             onChange={totalInStoreAmountChangeHandler}
