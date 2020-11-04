@@ -7,7 +7,8 @@ import {
   Switch,
 } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
+
+import store from './store';
 
 import Header from "./Header";
 import LoginPage from "./LoginPage";
@@ -15,7 +16,6 @@ import Products from "./Products";
 import Dashboard from "./Dashboard";
 import Orders from "./Orders";
 
-const store = createStore(() => [], {}, applyMiddleware());
 
 function App() {
 

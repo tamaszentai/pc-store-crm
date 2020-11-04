@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 
 const Products = (props) => {
+
+  const [tempState, setTempState] = useState([]);
 
   const [productId, setProductId] = useState(null);
   const [productName, setProductName] = useState(null);
@@ -13,6 +15,23 @@ const Products = (props) => {
   const [totalInStoreAmount, setTotalInStoreAmount] = useState(null);
   const [createdAt, setCreatedAt] = useState(null);
   const [updatedAt, setUpdatedAt] = useState(null);
+
+  useEffect(() => {
+      let value;
+// iterate localStorage
+for (let i = 0; i < localStorage.length; i++) {
+
+  // set iteration key name
+  let key = localStorage.key(i);
+
+  // use key name to retrieve the corresponding value
+  value = JSON.parse(localStorage.getItem(key));
+
+  // console.log the iteration key and value
+  // console.log(key, JSON.parse(value));
+  setTempState((tempState) => [ ...tempState, value])
+}
+  }, [])
 
   const productIdChangeHandler = (event) => {
     const input = event.target.value;
@@ -57,7 +76,6 @@ const Products = (props) => {
     const input = event.target.value;
     const storeAmount = parseInt(input);
     setTotalInStoreAmount(storeAmount);
-    
   };
 
   const createdAtChangeHandler = (event) => {
@@ -81,25 +99,31 @@ const Products = (props) => {
     product_updated_at: updatedAt
   };
 
+  const clearForm = () => {
+    const form = document.querySelector("form");
+    form.reset();
+  }
+
 
   const addItemHandler = (event) => {
     event.preventDefault();
-    localStorage.setItem(`product${item.product_id}`, JSON.stringify(item))
+    localStorage.setItem(`product${item.product_id}`, JSON.stringify(item));
+    clearForm();
   }
 
-  let value;
-// iterate localStorage
-for (let i = 0; i < localStorage.length; i++) {
+//   let value;
+// // iterate localStorage
+// for (let i = 0; i < localStorage.length; i++) {
 
-  // set iteration key name
-  let key = localStorage.key(i);
+//   // set iteration key name
+//   let key = localStorage.key(i);
 
-  // use key name to retrieve the corresponding value
-  value = localStorage.getItem(key);
+//   // use key name to retrieve the corresponding value
+//   value = localStorage.getItem(key);
 
-  // console.log the iteration key and value
-  console.log(key, JSON.parse(value));
-}
+//   // console.log the iteration key and value
+//   console.log(key, JSON.parse(value));
+// }
 
   return (
     <div className="products">
