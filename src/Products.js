@@ -1,38 +1,24 @@
 import React, { useState, useEffect } from "react";
-
+import axios from 'axios';
 
 const Products = (props) => {
-
   const [tempState, setTempState] = useState([]);
 
-  const [productId, setProductId] = useState(null);
-  const [productName, setProductName] = useState(null);
-  const [productDescription, setProductDescription] = useState(null);
-  const [productType, setProductType] = useState(null);
-  const [productStoreCost, setProductStoreCost] = useState(null);
-  const [productClientPrice, setProductClientPrice] = useState(null);
+  // States for input fields
+
+  const [productId, setProductId] = useState('');
+  const [productName, setProductName] = useState('');
+  const [productDescription, setProductDescription] = useState('');
+  const [productType, setProductType] = useState('');
+  const [productStoreCost, setProductStoreCost] = useState('');
+  const [productClientPrice, setProductClientPrice] = useState('');
   const [isOutOfStock, setIsOutOfStock] = useState(false);
-  const [totalInStoreAmount, setTotalInStoreAmount] = useState(null);
-  const [createdAt, setCreatedAt] = useState(null);
-  const [updatedAt, setUpdatedAt] = useState(null);
+  const [totalInStoreAmount, setTotalInStoreAmount] = useState('');
+  const [createdAt, setCreatedAt] = useState('');
+  const [updatedAt, setUpdatedAt] = useState('');
 
-  useEffect(() => {
-      let value;
-// iterate localStorage
-for (let i = 0; i < localStorage.length; i++) {
-
-  // set iteration key name
-  let key = localStorage.key(i);
-
-  // use key name to retrieve the corresponding value
-  value = JSON.parse(localStorage.getItem(key));
-
-  // console.log the iteration key and value
-  // console.log(key, JSON.parse(value));
-  setTempState((tempState) => [ ...tempState, value])
-}
-  }, [])
-
+  // Handlers for input 
+ 
   const productIdChangeHandler = (event) => {
     const input = event.target.value;
     const id = parseInt(input);
@@ -65,7 +51,7 @@ for (let i = 0; i < localStorage.length; i++) {
 
   const isOutOfStockChangeHandler = (event) => {
     if (isOutOfStock === false) {
-      setIsOutOfStock(true)
+      setIsOutOfStock(true);
       setTotalInStoreAmount(0);
     } else {
       setIsOutOfStock(false);
@@ -86,6 +72,8 @@ for (let i = 0; i < localStorage.length; i++) {
     setUpdatedAt(event.target.value);
   };
 
+  // Product object
+
   const item = {
     product_id: productId,
     product_name: productName,
@@ -96,34 +84,33 @@ for (let i = 0; i < localStorage.length; i++) {
     product_is_out_of_stock: isOutOfStock,
     product_in_store_amount: totalInStoreAmount,
     product_created_at: createdAt,
-    product_updated_at: updatedAt
+    product_updated_at: updatedAt,
   };
 
   const clearForm = () => {
     const form = document.querySelector("form");
     form.reset();
-  }
+  };
 
+  // Adding a new product to the database
 
   const addItemHandler = (event) => {
     event.preventDefault();
-    localStorage.setItem(`product${item.product_id}`, JSON.stringify(item));
+    axios.post('https://pc-store-cms.firebaseio.com/products.json', item)
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
     clearForm();
-  }
-
-//   let value;
-// // iterate localStorage
-// for (let i = 0; i < localStorage.length; i++) {
-
-//   // set iteration key name
-//   let key = localStorage.key(i);
-
-//   // use key name to retrieve the corresponding value
-//   value = localStorage.getItem(key);
-
-//   // console.log the iteration key and value
-//   console.log(key, JSON.parse(value));
-// }
+    setProductId('');
+    setProductName('');
+    setProductDescription('');
+    setProductType('');
+    setProductStoreCost('');
+    setProductClientPrice('');
+    setIsOutOfStock(false);
+    setTotalInStoreAmount('');
+    setCreatedAt('');
+    setUpdatedAt('');
+  };
 
   return (
     <div className="products">
