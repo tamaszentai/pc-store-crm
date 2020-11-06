@@ -4,6 +4,13 @@ import axios from 'axios';
 const Products = (props) => {
   const [tempState, setTempState] = useState([]);
 
+
+  useEffect(() => {
+    axios.get('https://pc-store-cms.firebaseio.com/products.json')
+    .then(response => setTempState(response.data))
+    .catch(error => console.log(error))
+  },[])
+
   // States for input fields
 
   const [productId, setProductId] = useState('');
