@@ -1,31 +1,35 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 
-const Products = (props) => {
-  const [tempState, setTempState] = useState([]);
+import ProductsList from "./ProductsList";
 
+// Temporary state for fetching data from the database before Redux
+
+const Products = () => {
+  const [tempState, setTempState] = useState();
 
   useEffect(() => {
-    axios.get('https://pc-store-cms.firebaseio.com/products.json')
-    .then(response => setTempState(response.data))
-    .catch(error => console.log(error))
-  },[])
+    axios
+      .get("https://pc-store-cms.firebaseio.com/products.json")
+      .then(response => setTempState([response.data]))
+      .catch((error) => console.log(error));
+  }, []);
 
   // States for input fields
 
-  const [productId, setProductId] = useState('');
-  const [productName, setProductName] = useState('');
-  const [productDescription, setProductDescription] = useState('');
-  const [productType, setProductType] = useState('');
-  const [productStoreCost, setProductStoreCost] = useState('');
-  const [productClientPrice, setProductClientPrice] = useState('');
+  const [productId, setProductId] = useState("");
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productType, setProductType] = useState("");
+  const [productStoreCost, setProductStoreCost] = useState("");
+  const [productClientPrice, setProductClientPrice] = useState("");
   const [isOutOfStock, setIsOutOfStock] = useState(false);
-  const [totalInStoreAmount, setTotalInStoreAmount] = useState('');
-  const [createdAt, setCreatedAt] = useState('');
-  const [updatedAt, setUpdatedAt] = useState('');
+  const [totalInStoreAmount, setTotalInStoreAmount] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+  const [updatedAt, setUpdatedAt] = useState("");
 
-  // Handlers for input 
- 
+  // Handlers for input
+
   const productIdChangeHandler = (event) => {
     const input = event.target.value;
     const id = parseInt(input);
@@ -103,20 +107,21 @@ const Products = (props) => {
 
   const addItemHandler = (event) => {
     event.preventDefault();
-    axios.post('https://pc-store-cms.firebaseio.com/products.json', item)
-    .then(response => console.log(response))
-    .catch(error => console.log(error));
+    axios
+      .post("https://pc-store-cms.firebaseio.com/products.json", item)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
     clearForm();
-    setProductId('');
-    setProductName('');
-    setProductDescription('');
-    setProductType('');
-    setProductStoreCost('');
-    setProductClientPrice('');
+    setProductId("");
+    setProductName("");
+    setProductDescription("");
+    setProductType("");
+    setProductStoreCost("");
+    setProductClientPrice("");
     setIsOutOfStock(false);
-    setTotalInStoreAmount('');
-    setCreatedAt('');
-    setUpdatedAt('');
+    setTotalInStoreAmount("");
+    setCreatedAt("");
+    setUpdatedAt("");
   };
 
   return (
@@ -218,6 +223,7 @@ const Products = (props) => {
         </label>
         <button>Add Item</button>
       </form>
+      {/* <ProductsList products={tempState}/> */}
     </div>
   );
 };
